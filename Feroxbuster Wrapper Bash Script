@@ -1,1 +1,57 @@
-# FeroxBuster-Edit-For-RedTeaming
+!/bin/bash
+
+TARGET="$1"
+WORDLIST="$2"
+
+RATE=20
+WINDOW=120
+COOLDOWN=420
+
+STATE_DIR="$HOME/ferox_states"
+
+mkdir -p "$STATE_DIR"
+
+cd "$STATE_DIR" || exit 1
+
+while true; do
+
+    STATE=$(find . -maxdepth 1 -type f -name "*.state" -print -quit)
+
+    if [[ -n "$STATE" ]]; then
+
+        echo "[+] Resuming previous scan..."
+        echo "[+] State file: $STATE"
+
+        timeout \
+            --signal=INT \
+            --kill-after=10s \
+            "${WINDOW}s" \
+            feroxbuster \
+            --resume-from "$STATE" \
+            --rate-limit "$RATE" \
+            --scan-limit 1
+
+    else
+
+        echo "[+] Starting new scan..."
+
+        timeout \
+            --signal=INT \
+            --kill-after=10s \
+            "${WINDOW}s" \
+            feroxbuster \
+            --url "$TARGET" \
+            --wordlist "$WORDLIST" \
+            --rate-limit "$RATE" \
+            --scan-limit 1
+
+    fi
+
+    echo
+    echo "[+] Scan window finished."
+    echo "[+] Sleeping for 7 minutes..."
+    echo
+
+    sleep "$COOLDOWN"
+
+done
