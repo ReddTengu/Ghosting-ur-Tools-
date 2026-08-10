@@ -1,8 +1,8 @@
-## Feroxbuster Low-Noise Wrapper
+# Description
 
 A simple Bash wrapper that modifies Feroxbuster's scanning behavior without changing its source code.
 
-### What it does
+## What it does
 
 * Limits the scan to **20 requests/second**.
 * Runs the scan for **120 seconds**.
@@ -11,12 +11,28 @@ A simple Bash wrapper that modifies Feroxbuster's scanning behavior without chan
 * Automatically resumes the scan after the cooldown.
 * Uses --scan-limit 1 to reduce concurrent recursive scans and make the request rate more predictable.
 
-### Workflow
+## Workflow
 
 Sending 20 Requests Persecond => 120s scanning => 7min cooldown => resume => repeat
 
 
 The goal is to reduce aggressive request bursts and make reconnaissance traffic more controlled.
+
+## Setup/Usage
+-1 go to a preferd Directory " cd /home/kali/Tools "
+
+-2 Creat a file " nano ferox_low_noise.sh " and Put The Code on the bash File
+
+-3 make the file excutble " chmod +x ~/ferox_low_noise.sh " 
+
+-4 make sure the File bash File have the Right permissons " -rwxr-xr-x ... ferox_low_noise.sh "
+
+-5 Rin the Bash File and Put the Target https://Target IP and the wordlist path /usr/share/seclists/Discovery/Web-Content/common.txt
+
+-6 the Output File will be In this Path /home/kali/ferox_states
+
+### How To use it 
+* run The Bash Script in the terminal:  /home/kali/Tools/ferox_low_noise.sh  https://Target IP  /usr/share/seclists/Discovery/Web-Content/common.txt
 
 ___________________________________________________________________
 
